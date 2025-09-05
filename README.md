@@ -9,7 +9,9 @@ This repository documents my AI agent learning path. It covers neural networks, 
 
 #### **Projects Completed**
 
-**Project 1:** Sentiment analysis using Hugging Face Transformers (DistilBERT).
+- Sentiment analysis using Hugging Face Transformers (DistilBERT).
+- Conversational chatbot with Rasa
+
 
 #### **Setup**
 
