@@ -1,0 +1,15 @@
+version: "3.1"
+intents:
+  - greet
+  - goodbye
+  - ask_weather
+responses:
+  utter_greet:
+    - text: "Hello! How can I assist you today?"
+  utter_goodbye:
+    - text: "Goodbye! Have a great day!"
+  utter_weather:
+    - text: "It's sunny and warm today! Perfect for a walk."
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
