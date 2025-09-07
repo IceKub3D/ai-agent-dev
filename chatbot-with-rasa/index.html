@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rasa Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #chatbox { border: 1px solid #ccc; height: 400px; overflow-y: scroll; padding: 10px; }
+        #input { width: 80%; padding: 5px; }
+        button { padding: 5px 10px; }
+        .user { color: blue; }
+        .bot { color: green; }
+    </style>
+</head>
+<body>
+    <h1>Rasa Chatbot</h1>
+    <div id="chatbox"></div>
+    <input type="text" id="input" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById('input').value;
+            if (!input) return;
+            const chatbox = document.getElementById('chatbox');
+            chatbox.innerHTML += `<p class="user">You: ${input}</p>`;
+            try {
+                const response = await fetch('http://localhost:5005/webhooks/rest/webhook', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sender: 'user', message: input })
+                });
+                const data = await response.json();
+                data.forEach(msg => {
+                    if (msg.text) {
+                        chatbox.innerHTML += `<p class="bot">Bot: ${msg.text}</p>`;
+                    }
+                });
+            } catch (error) {
+                chatbox.innerHTML += `<p class="bot">Error: Could not connect to Rasa server</p>`;
+            }
+            document.getElementById('input').value = '';
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+        document.getElementById('input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>
