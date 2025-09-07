@@ -1,3 +1,3 @@
 #!/bin/bash
 rasa train
-rasa shell
+rasa run --enable-api --cors "*"
